@@ -30,8 +30,8 @@ export default function NewRecipePage() {
       const recipe = await createRecipe({
         name: formData.name,
         category: formData.category,
-        base_spirit: formData.base_spirit || null,
-        instructions: formData.instructions || null,
+        base_spirit: formData.base_spirit || undefined,
+        instructions: formData.instructions || undefined,
         components: [],
         pour_cost: 0,
       })
