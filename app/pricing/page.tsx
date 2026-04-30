@@ -15,7 +15,11 @@ interface Recipe {
 interface Ingredient {
   id: string
   name: string
-  cost_per_oz: number
+  unit: string
+  cost_per_unit: number
+  supplier?: string
+  shelf_life_days?: number
+  created_at: string
 }
 
 interface RecipeComponent {
@@ -163,7 +167,7 @@ function CocktailPricingCalculator({
   // Calculate COGS
   const cogs = recipeComponents.reduce((total, component) => {
     const ingredient = ingredients.find((i) => i.id === component.ingredient_id)
-    return total + (ingredient?.cost_per_oz || 0) * component.amount_oz
+    return total + (ingredient?.cost_per_unit || 0) * component.amount_oz
   }, 0)
 
   const totalCogs = customCogs > 0 ? customCogs : cogs
@@ -289,7 +293,7 @@ function CocktailPricingCalculator({
                   <>
                     {recipeComponents.map((component) => {
                       const ingredient = ingredients.find((i) => i.id === component.ingredient_id)
-                      const cost = (ingredient?.cost_per_oz || 0) * component.amount_oz
+                      const cost = (ingredient?.cost_per_unit || 0) * component.amount_oz
                       return (
                         <div key={component.ingredient_id} className="flex justify-between text-sm">
                           <span className="text-slate-600">
@@ -443,7 +447,7 @@ function BatchPricingCalculator({
   // Calculate batch cost
   const batchCost = recipeComponents.reduce((total, component) => {
     const ingredient = ingredients.find((i) => i.id === component.ingredient_id)
-    return total + (ingredient?.cost_per_oz || 0) * component.amount_oz * batchMultiplier
+    return total + (ingredient?.cost_per_unit || 0) * component.amount_oz * batchMultiplier
   }, 0)
 
   const costPerUnit = yieldAmount > 0 ? batchCost / yieldAmount : 0
@@ -665,7 +669,7 @@ function BatchPricingCalculator({
                 {recipeComponents.map((component) => {
                   const ingredient = ingredients.find((i) => i.id === component.ingredient_id)
                   const scaledAmount = component.amount_oz * batchMultiplier
-                  const cost = (ingredient?.cost_per_oz || 0) * scaledAmount
+                  const cost = (ingredient?.cost_per_unit || 0) * scaledAmount
                   return (
                     <div key={component.ingredient_id} className="border border-slate-200 p-3 rounded">
                       <p className="font-semibold text-slate-900">{ingredient?.name}</p>
@@ -674,7 +678,7 @@ function BatchPricingCalculator({
                         <span className="font-medium">${cost.toFixed(2)}</span>
                       </div>
                       <p className="text-xs text-slate-500 mt-1">
-                        @ ${ingredient?.cost_per_oz.toFixed(2)}/oz
+                        @ ${ingredient?.cost_per_unit.toFixed(2)}/oz
                       </p>
                     </div>
                   )
