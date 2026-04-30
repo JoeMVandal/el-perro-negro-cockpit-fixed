@@ -19,10 +19,11 @@ export default function PrepTemplatesPage() {
 
   // Group items by category
   const groupedItems = items.reduce((acc, item) => {
-    if (!acc[item.category]) {
-      acc[item.category] = []
+    const category = item.category ?? 'Uncategorized'
+    if (!acc[category]) {
+      acc[category] = []
     }
-    acc[item.category].push(item)
+    acc[category].push(item)
     return acc
   }, {} as Record<string, PrepItem[]>)
 
