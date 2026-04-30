@@ -38,11 +38,16 @@ export default function PrepPage() {
   async function handleToggle(id: string, completed: boolean) {
     try {
       await togglePrepListItem(id, !completed)
-      setPrepItems(prepItems.map(item =>
-        item.id === id
-          ? { ...item, completed: !completed, completed_at: !completed ? new Date().toISOString() : null }
-          : item
-      ))
+      setPrepItems(prepItems.map(item => {
+        if (item.id === id) {
+          return {
+            ...item,
+            completed: !completed,
+            completed_at: !completed ? new Date().toISOString() : null,
+          } as PrepListItem
+        }
+        return item
+      }))
     } catch (err: any) {
       setError(err.message)
     }
