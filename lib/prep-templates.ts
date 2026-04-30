@@ -75,5 +75,5 @@ export function getPrepItemsForDay(dayOfWeek: string): PrepItem[] {
 
 export function getDayOfWeek(): string {
   const days = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY']
-  return days[new Date().getDay()]
+  return days[new Date().getDay()]!
 }
