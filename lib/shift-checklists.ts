@@ -106,7 +106,7 @@ export const CLOSING_CHECKLIST: ChecklistTemplate = {
 
 export function getDayOfWeekName(): string {
   const days = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY']
-  return days[new Date().getDay()]
+  return days[new Date().getDay()]!
 }
 
 export function getSideworkTask(type: 'opening' | 'closing', dayOfWeek?: string): string {
